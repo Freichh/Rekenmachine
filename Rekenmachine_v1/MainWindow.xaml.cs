@@ -26,19 +26,31 @@ namespace Rekenmachine_v1
         }
 
 
-        int enteredValue;
-
+        StringBuilder enteredValue = new StringBuilder();
+        int storedValue = 0;
+ 
         private void button_1_Click(object sender, RoutedEventArgs e)
         {
-            screenLabel.Content = 1;
-            // cast object to int
-            enteredValue = (int) button_1.Tag;
-            StoreValue(enteredValue); 
+
+            enteredValue.Append(button_1.Tag);
+            Console.WriteLine("enteredValue: " + enteredValue);
+
+            // StoreValue(enteredValue);
+
+            screenLabel.Content = null + enteredValue;
+
         }
 
         private void button_2_Click(object sender, RoutedEventArgs e)
         {
-            screenLabel.Content = 2;
+
+            enteredValue.Append(button_2.Tag);
+            Console.WriteLine("enteredValue: " + enteredValue);
+
+            // StoreValue(enteredValue);
+
+            screenLabel.Content = null + enteredValue;
+
         }
 
         private void button_3_Click(object sender, RoutedEventArgs e)
@@ -78,7 +90,8 @@ namespace Rekenmachine_v1
 
         private void button_plus_Click(object sender, RoutedEventArgs e)
         {
-
+            storedValue = int.Parse(enteredValue.ToString());
+            Console.WriteLine("storedValue: " + storedValue);
         }
 
         private void button_min_Click(object sender, RoutedEventArgs e)
@@ -101,10 +114,10 @@ namespace Rekenmachine_v1
 
         }
 
-        private static int StoreValue(int value)
+        private void StoreValue(StringBuilder passedValue)
         {
 
-            return value;
+
         }
 
     }

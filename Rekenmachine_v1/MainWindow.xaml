@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Rectangle HorizontalAlignment="Left" Margin="175,35,0,40" Stroke="Black" Width="230" RadiusX="10" RadiusY="10">
+        <Rectangle HorizontalAlignment="Left" Margin="186,35,0,45" Stroke="Black" Width="211" RadiusX="10" RadiusY="10" Height="340" VerticalAlignment="Top">
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFD7CBFF" Offset="0.006"/>
