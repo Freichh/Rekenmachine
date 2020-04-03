@@ -33,68 +33,31 @@ namespace Rekenmachine_v1
 
         // Resultaat van laatste berekening
         double endResult = 0;
+
+        Operation operation;
  
-        private void button_1_Click(object sender, RoutedEventArgs e)
-        {
-            // Sla tag 'invoer' op in stringbuilder
-            enteredValue.Append(button_1.Tag);
-            Console.WriteLine("enteredValue: " + enteredValue);
-
-            // show on display
-            screenLabel.Content = null + enteredValue;
-
-        }
-
-        private void button_2_Click(object sender, RoutedEventArgs e)
-        {
-
-            enteredValue.Append(button_2.Tag);
-            Console.WriteLine("enteredValue: " + enteredValue);
-
-            screenLabel.Content = null + enteredValue;
-
-        }
-
-        private void button_3_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void button_4_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void button_5_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void button_6_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void button_7_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void button_8_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void button_9_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
+        private void button_1_Click(object sender, RoutedEventArgs e) { ButtonInput("1"); }
+        private void button_2_Click(object sender, RoutedEventArgs e) { ButtonInput("2"); }
+        private void button_3_Click(object sender, RoutedEventArgs e) { ButtonInput("3"); }
+        private void button_4_Click(object sender, RoutedEventArgs e) { ButtonInput("4"); }
+        private void button_5_Click(object sender, RoutedEventArgs e) { ButtonInput("5"); }
+        private void button_6_Click(object sender, RoutedEventArgs e) { ButtonInput("6"); }
+        private void button_7_Click(object sender, RoutedEventArgs e) { ButtonInput("7"); }
+        private void button_8_Click(object sender, RoutedEventArgs e) { ButtonInput("8"); }
+        private void button_9_Click(object sender, RoutedEventArgs e) { ButtonInput("9"); }
+        private void button_0_Click(object sender, RoutedEventArgs e) { ButtonInput("0"); }
 
         private void button_plus_Click(object sender, RoutedEventArgs e)
         {
-            if (enteredValue.Length > 0)
+            // Alleen uitvoeren als operation = None
+            if (operation != Operation.Plus)
             {
-                // Sla huidige stringbuilder invoer op als double
+                Console.WriteLine(operation != Operation.Plus);
+                Console.WriteLine("Operation " + operation);
+
+                operation = Operation.Plus;
+
+                // Converteer naar double en sla invoer op
                 storedValue += double.Parse(enteredValue.ToString());
                 Console.WriteLine("storedValue: " + storedValue);
 
@@ -105,13 +68,28 @@ namespace Rekenmachine_v1
             {
                 // do nothing
             }
-
-
         }
 
         private void button_min_Click(object sender, RoutedEventArgs e)
         {
+            if (operation != Operation.Min)
+            {
+                Console.WriteLine(operation != Operation.Plus);
+                Console.WriteLine("Operation " + operation);
 
+                operation = Operation.Min;
+
+                // Converteer naar double en sla invoer op
+                storedValue += double.Parse(enteredValue.ToString());
+                Console.WriteLine("storedValue: " + storedValue);
+
+                // Leeg huidige invoer variabele en wacht op nieuwe
+                enteredValue.Clear();
+            }
+            else
+            {
+                // do nothing
+            }
         }
 
         private void button_multiply_Click(object sender, RoutedEventArgs e)
@@ -126,8 +104,25 @@ namespace Rekenmachine_v1
 
         private void button_result_Click(object sender, RoutedEventArgs e)
         {
-            endResult = storedValue + double.Parse(enteredValue.ToString());
-            Console.WriteLine("endResult: " + endResult);
+            switch (operation)
+            {
+                case Operation.Plus:
+                    endResult = storedValue + double.Parse(enteredValue.ToString());
+                    Console.WriteLine("endResult Plus: " + endResult);
+                    break;
+                case Operation.Min:
+                    endResult = storedValue - double.Parse(enteredValue.ToString());
+                    Console.WriteLine("endResult Min: " + endResult);
+                    break;
+                case Operation.Multiply:
+                    break;
+                case Operation.Divide:
+                    break;
+                case Operation.Quadrant:
+                    break;
+                default:
+                    break;
+            }
 
             // Leeg invoer
             enteredValue.Clear().Append(0);
@@ -138,11 +133,26 @@ namespace Rekenmachine_v1
             screenLabel.Content = endResult;
         }
 
-
-        private void StoreValue(StringBuilder passedValue)
+        private void ButtonInput(string value)
         {
+            operation = Operation.None;
 
+            // Sla tag 'invoer' op in stringbuilder
+            enteredValue.Append(value);
+            Console.WriteLine("enteredValue: " + enteredValue);
 
+            // laat zien op display
+            screenLabel.Content = null + enteredValue;
+        }
+
+        enum Operation
+        {
+            None,
+            Plus,
+            Min,
+            Multiply,
+            Divide,
+            Quadrant
         }
 
     }
