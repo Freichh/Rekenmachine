@@ -26,7 +26,7 @@ namespace Rekenmachine_v1
         }
 
         // Invoer opslag variabele
-        StringBuilder enteredValue = new StringBuilder();
+        string enteredValue = "";
 
         // Opslag voor berekeningen
         double storedValue = 0;
@@ -34,7 +34,7 @@ namespace Rekenmachine_v1
         // Resultaat van laatste berekening
         double endResult = 0;
 
-        Operation operation;
+        Operation operation = Operation.None;
  
         private void button_1_Click(object sender, RoutedEventArgs e) { ButtonInput("1"); }
         private void button_2_Click(object sender, RoutedEventArgs e) { ButtonInput("2"); }
@@ -49,47 +49,54 @@ namespace Rekenmachine_v1
 
         private void button_plus_Click(object sender, RoutedEventArgs e)
         {
-            // Alleen uitvoeren als operation = None
-            if (operation != Operation.Plus)
+
+            operation = Operation.Plus;
+            Console.WriteLine("Operation " + operation);
+
+            // Converteer naar double en sla laatste invoer op als nog leeg is
+            if (storedValue == 0)
             {
-                Console.WriteLine(operation != Operation.Plus);
-                Console.WriteLine("Operation " + operation);
-
-                operation = Operation.Plus;
-
-                // Converteer naar double en sla invoer op
-                storedValue += double.Parse(enteredValue.ToString());
+                storedValue += double.Parse(enteredValue);
                 Console.WriteLine("storedValue: " + storedValue);
-
-                // Leeg huidige invoer variabele en wacht op nieuwe
-                enteredValue.Clear();
+            }
+            else if (enteredValue.Length > 0)
+            {
+                CalculateResult();
             }
             else
             {
                 // do nothing
             }
+
+            // Leeg huidige invoer variabele en wacht op nieuwe
+            enteredValue = "";
+
         }
 
         private void button_min_Click(object sender, RoutedEventArgs e)
         {
-            if (operation != Operation.Min)
+
+            operation = Operation.Min;
+            Console.WriteLine("Operation " + operation);
+
+            // Converteer naar double en sla laatste invoer op als nog leeg is
+            if (storedValue == 0)
             {
-                Console.WriteLine(operation != Operation.Plus);
-                Console.WriteLine("Operation " + operation);
-
-                operation = Operation.Min;
-
-                // Converteer naar double en sla invoer op
                 storedValue += double.Parse(enteredValue.ToString());
                 Console.WriteLine("storedValue: " + storedValue);
-
-                // Leeg huidige invoer variabele en wacht op nieuwe
-                enteredValue.Clear();
+            }
+            else if (enteredValue.Length > 0)
+            {
+                CalculateResult();
             }
             else
             {
                 // do nothing
             }
+
+            // Leeg huidige invoer variabele en wacht op nieuwe
+            enteredValue = "";
+
         }
 
         private void button_multiply_Click(object sender, RoutedEventArgs e)
@@ -102,47 +109,58 @@ namespace Rekenmachine_v1
 
         }
 
-        private void button_result_Click(object sender, RoutedEventArgs e)
-        {
-            switch (operation)
-            {
-                case Operation.Plus:
-                    endResult = storedValue + double.Parse(enteredValue.ToString());
-                    Console.WriteLine("endResult Plus: " + endResult);
-                    break;
-                case Operation.Min:
-                    endResult = storedValue - double.Parse(enteredValue.ToString());
-                    Console.WriteLine("endResult Min: " + endResult);
-                    break;
-                case Operation.Multiply:
-                    break;
-                case Operation.Divide:
-                    break;
-                case Operation.Quadrant:
-                    break;
-                default:
-                    break;
-            }
-
-            // Leeg invoer
-            enteredValue.Clear().Append(0);
-
-            // Sla op in geheugen voor verdere berekening
-            storedValue = endResult;
-            // laat zien op display
-            screenLabel.Content = endResult;
+        private void button_result_Click(object sender, RoutedEventArgs e) 
+        { 
+            CalculateResult(); 
         }
 
         private void ButtonInput(string value)
         {
-            operation = Operation.None;
-
             // Sla tag 'invoer' op in stringbuilder
-            enteredValue.Append(value);
+            enteredValue += value;
             Console.WriteLine("enteredValue: " + enteredValue);
 
             // laat zien op display
             screenLabel.Content = null + enteredValue;
+        }
+
+        private void CalculateResult()
+        {
+            // Bereken alleen wanneer er een enteredValue en storedValue zijn
+            if (enteredValue.Length > 0 && storedValue > 0)
+            {
+                Console.WriteLine("Result operation " + operation);
+                switch (operation)
+                {
+                    case Operation.Plus:
+                        endResult = storedValue + double.Parse(enteredValue);
+                        Console.WriteLine("endResult Plus: " + endResult);
+                        break;
+                    case Operation.Min:
+                        endResult = storedValue - double.Parse(enteredValue);
+                        Console.WriteLine("endResult Min: " + endResult);
+                        break;
+                    case Operation.Multiply:
+                        break;
+                    case Operation.Divide:
+                        break;
+                    case Operation.Quadrant:
+                        break;
+                    default:
+                        break;
+                }
+
+                // Leeg invoer
+                enteredValue = "";
+
+                // Sla op in geheugen voor verdere berekening
+                storedValue = endResult;
+
+                // laat zien op display
+                screenLabel.Content = endResult;
+
+            }
+
         }
 
         enum Operation
