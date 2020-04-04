@@ -24,9 +24,8 @@
         <Button x:Name="button_9" Content="9" HorizontalAlignment="Left" Margin="420,205,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FFEEEEEE" Foreground="Black" BorderBrush="#FFA3A3A3" Click="button_9_Click" Tag="9"/>
         <Button x:Name="button_6" Content="6" HorizontalAlignment="Left" Margin="420,240,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FFEEEEEE" Foreground="Black" BorderBrush="#FFA3A3A3" Click="button_6_Click" Tag="6"/>
         <Button x:Name="button_3" Content="3" HorizontalAlignment="Left" Margin="420,275,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FFEEEEEE" Foreground="Black" BorderBrush="#FFA3A3A3" Click="button_3_Click" Tag="3"/>
-        <Button x:Name="button_euro" Content="€" HorizontalAlignment="Left" Margin="347,170,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FF484848" Foreground="White" BorderBrush="#FFA3A3A3"/>
-        <Button x:Name="button_percent" Content="%" HorizontalAlignment="Left" Margin="384,170,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FF484848" Foreground="White" BorderBrush="#FFA3A3A3"/>
-        <Button Content="x^2" HorizontalAlignment="Left" Margin="420,170,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FF484848" Foreground="White" BorderBrush="#FFA3A3A3"/>
+        <Button x:Name="button_euro" Content="€" HorizontalAlignment="Left" Margin="347,170,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FF484848" Foreground="White" BorderBrush="#FFA3A3A3" Click="button_euro_Click"/>
+        <Button x:Name="button_percent" Content="%" HorizontalAlignment="Left" Margin="384,170,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FF484848" Foreground="White" BorderBrush="#FFA3A3A3" Click="button_percent_Click"/>
         <Button x:Name="button_plusormin" Content="+ / -" HorizontalAlignment="Left" Margin="347,310,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FF484848" Foreground="White" BorderBrush="#FFA3A3A3"/>
         <Button x:Name="button_0" Content="0" HorizontalAlignment="Left" Margin="384,310,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FFEEEEEE" Foreground="Black" BorderBrush="#FFA3A3A3"/>
         <Button x:Name="button_comma" Content="," HorizontalAlignment="Left" Margin="420,310,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FF484848" Foreground="White" BorderBrush="#FFA3A3A3"/>
@@ -35,9 +34,9 @@
         <Button x:Name="button_plus" Content="+" HorizontalAlignment="Left" Margin="455,275,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FF484848" Foreground="White" BorderBrush="#FFA3A3A3" Click="button_plus_Click"/>
         <Button x:Name="button_divide" Content="/" HorizontalAlignment="Left" Margin="455,170,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FF484848" Foreground="White" BorderBrush="#FFA3A3A3" Click="button_divide_Click"/>
         <Button x:Name="button_result" Content="=" HorizontalAlignment="Left" Margin="455,310,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FF00C835" Foreground="White" BorderBrush="#FFA3A3A3" Click="button_result_Click"/>
-        <Button x:Name="button_clearentry" Content="CE" HorizontalAlignment="Left" Margin="384,134,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FFFF3D3D" Foreground="White" BorderBrush="#FFA3A3A3" Click="button_clearentry_Click"/>
-        <Button x:Name="button_clear" Content="C" HorizontalAlignment="Left" Margin="420,134,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FFFF3D3D" Foreground="White" BorderBrush="#FFA3A3A3" Click="button_clear_Click"/>
-        <Button x:Name="button_del" Content="&lt;--" HorizontalAlignment="Left" Margin="455,134,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FF484848" Foreground="White" BorderBrush="#FFA3A3A3"/>
+        <Button x:Name="button_clearentry" Content="CE" HorizontalAlignment="Left" Margin="420,135,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FFFF3D3D" Foreground="White" BorderBrush="#FFA3A3A3" Click="button_clearentry_Click"/>
+        <Button x:Name="button_clear" Content="C" HorizontalAlignment="Left" Margin="456,135,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FFFF3D3D" Foreground="White" BorderBrush="#FFA3A3A3" Click="button_clear_Click"/>
+        <Button x:Name="button_del" Content="&lt;--" HorizontalAlignment="Left" Margin="420,170,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FF484848" Foreground="White" BorderBrush="#FFA3A3A3" Click="button_del_Click"/>
         <Rectangle HorizontalAlignment="Left" Height="75" Margin="311,40,0,0" Stroke="Black" VerticalAlignment="Top" Width="174" RadiusX="10" RadiusY="10">
             <Rectangle.Fill>
                 <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">

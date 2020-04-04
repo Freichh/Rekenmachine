@@ -53,26 +53,28 @@ namespace Rekenmachine_v1
         {
             operation = Operation.Plus;
             Console.WriteLine("Operation " + operation);
-
             ProcessInput();
         }
 
         private void button_min_Click(object sender, RoutedEventArgs e)
         {
+            ProcessInput();
             operation = Operation.Min;
             Console.WriteLine("Operation " + operation);
-
-            ProcessInput();
         }
 
         private void button_multiply_Click(object sender, RoutedEventArgs e)
         {
-
+            ProcessInput();
+            operation = Operation.Multiply;
+            Console.WriteLine("Operation " + operation);
         }
 
         private void button_divide_Click(object sender, RoutedEventArgs e)
         {
-
+            ProcessInput();
+            operation = Operation.Divide;
+            Console.WriteLine("Operation " + operation);
         }
 
         private void button_result_Click(object sender, RoutedEventArgs e) 
@@ -94,6 +96,37 @@ namespace Rekenmachine_v1
             screenLabel.Content = 0;
         }
 
+        private void button_percent_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void button_euro_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void button_del_Click(object sender, RoutedEventArgs e)
+        {
+            if (enteredValue.Length > 0)
+            {
+                Console.WriteLine("Backspace, old " + enteredValue);
+                enteredValue = enteredValue.Remove(enteredValue.Length-1);
+                Console.WriteLine("New enteredValue: " + enteredValue);
+
+                // laat zien op display
+                screenLabel.Content = null + enteredValue;
+
+                if (enteredValue.Length == 0)
+                {
+                    screenLabel.Content = 0;
+                    enteredValue = "";
+                }
+            }
+        }
+
+
+        // METHODS
         private void ButtonInput(string value)
         {
             enteredValue += value;
@@ -106,8 +139,9 @@ namespace Rekenmachine_v1
         private void ProcessInput()
         {
             // maak 0 als vanaf 0 wordt berekend zonder 1e invoer
-            if (enteredValue == "")
+            if (enteredValue == "" && storedValue == 0)
             {
+                Console.WriteLine("No input, set 0:");
                 enteredValue = "0";
             }
 
@@ -116,12 +150,14 @@ namespace Rekenmachine_v1
             {
                 storedValue += double.Parse(enteredValue);
                 Console.WriteLine("storedValue: " + storedValue);
+
+                // set operation?
             }
 
-            // bereken ook als er 2 getallen zijn en er een operatie i.p.v. '=' wordt gekozen 
+            // bereken als er 2 getallen zijn en er een operatie i.p.v. '=' wordt gekozen 
             else if (enteredValue.Length > 0)
             {
-                Console.WriteLine("Calculate: " + enteredValue + "and " + storedValue);
+                Console.WriteLine("Calculate: " + enteredValue + " and " + storedValue);
                 CalculateResult();
             }
             else
@@ -131,6 +167,7 @@ namespace Rekenmachine_v1
 
             // Leeg invoer
             enteredValue = "";
+            Console.WriteLine("clear enteredValue: " + enteredValue);
         }
 
         private void CalculateResult()
@@ -150,10 +187,16 @@ namespace Rekenmachine_v1
                         Console.WriteLine("endResult Min: " + endResult);
                         break;
                     case Operation.Multiply:
+                        endResult = storedValue * double.Parse(enteredValue);
+                        Console.WriteLine("endResult Multi: " + endResult);
                         break;
                     case Operation.Divide:
+                        endResult = storedValue / double.Parse(enteredValue);
+                        Console.WriteLine("endResult Divide: " + endResult);
                         break;
-                    case Operation.Quadrant:
+                    case Operation.Percent:
+                        endResult = storedValue * double.Parse(enteredValue);
+                        Console.WriteLine("endResult Percent: " + endResult);
                         break;
                     default:
                         break;
@@ -177,7 +220,9 @@ namespace Rekenmachine_v1
             Min,
             Multiply,
             Divide,
-            Quadrant
+            Percent
         }
+
+
     }
 }
