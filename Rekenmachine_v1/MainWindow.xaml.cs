@@ -23,6 +23,8 @@ namespace Rekenmachine_v1
         public MainWindow()
         {
             InitializeComponent();
+            // default 0 state
+            screenLabel.Content = 0;
         }
 
         // Invoer opslag variabele
@@ -49,54 +51,18 @@ namespace Rekenmachine_v1
 
         private void button_plus_Click(object sender, RoutedEventArgs e)
         {
-
             operation = Operation.Plus;
             Console.WriteLine("Operation " + operation);
 
-            // Converteer naar double en sla laatste invoer op als nog leeg is
-            if (storedValue == 0)
-            {
-                storedValue += double.Parse(enteredValue);
-                Console.WriteLine("storedValue: " + storedValue);
-            }
-            else if (enteredValue.Length > 0)
-            {
-                CalculateResult();
-            }
-            else
-            {
-                // do nothing
-            }
-
-            // Leeg huidige invoer variabele en wacht op nieuwe
-            enteredValue = "";
-
+            ProcessInput();
         }
 
         private void button_min_Click(object sender, RoutedEventArgs e)
         {
-
             operation = Operation.Min;
             Console.WriteLine("Operation " + operation);
 
-            // Converteer naar double en sla laatste invoer op als nog leeg is
-            if (storedValue == 0)
-            {
-                storedValue += double.Parse(enteredValue.ToString());
-                Console.WriteLine("storedValue: " + storedValue);
-            }
-            else if (enteredValue.Length > 0)
-            {
-                CalculateResult();
-            }
-            else
-            {
-                // do nothing
-            }
-
-            // Leeg huidige invoer variabele en wacht op nieuwe
-            enteredValue = "";
-
+            ProcessInput();
         }
 
         private void button_multiply_Click(object sender, RoutedEventArgs e)
@@ -114,9 +80,22 @@ namespace Rekenmachine_v1
             CalculateResult(); 
         }
 
+        private void button_clear_Click(object sender, RoutedEventArgs e)
+        {
+            screenLabel.Content = 0;
+            enteredValue = "";
+            storedValue = 0;
+            endResult = 0;
+        }
+
+        private void button_clearentry_Click(object sender, RoutedEventArgs e)
+        {
+            enteredValue = "";
+            screenLabel.Content = 0;
+        }
+
         private void ButtonInput(string value)
         {
-            // Sla tag 'invoer' op in stringbuilder
             enteredValue += value;
             Console.WriteLine("enteredValue: " + enteredValue);
 
@@ -124,10 +103,40 @@ namespace Rekenmachine_v1
             screenLabel.Content = null + enteredValue;
         }
 
+        private void ProcessInput()
+        {
+            // maak 0 als vanaf 0 wordt berekend zonder 1e invoer
+            if (enteredValue == "")
+            {
+                enteredValue = "0";
+            }
+
+            // Converteer invoer naar double en sla op als nog leeg is onder storedValue
+            if (storedValue == 0)
+            {
+                storedValue += double.Parse(enteredValue);
+                Console.WriteLine("storedValue: " + storedValue);
+            }
+
+            // bereken ook als er 2 getallen zijn en er een operatie i.p.v. '=' wordt gekozen 
+            else if (enteredValue.Length > 0)
+            {
+                Console.WriteLine("Calculate: " + enteredValue + "and " + storedValue);
+                CalculateResult();
+            }
+            else
+            {
+                // do nothing
+            }
+
+            // Leeg invoer
+            enteredValue = "";
+        }
+
         private void CalculateResult()
         {
             // Bereken alleen wanneer er een enteredValue en storedValue zijn
-            if (enteredValue.Length > 0 && storedValue > 0)
+            if (enteredValue.Length > 0)
             {
                 Console.WriteLine("Result operation " + operation);
                 switch (operation)
@@ -158,9 +167,7 @@ namespace Rekenmachine_v1
 
                 // laat zien op display
                 screenLabel.Content = endResult;
-
             }
-
         }
 
         enum Operation
@@ -172,6 +179,5 @@ namespace Rekenmachine_v1
             Divide,
             Quadrant
         }
-
     }
 }

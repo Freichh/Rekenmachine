@@ -35,8 +35,8 @@
         <Button x:Name="button_plus" Content="+" HorizontalAlignment="Left" Margin="455,275,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FF484848" Foreground="White" BorderBrush="#FFA3A3A3" Click="button_plus_Click"/>
         <Button x:Name="button_divide" Content="/" HorizontalAlignment="Left" Margin="455,170,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FF484848" Foreground="White" BorderBrush="#FFA3A3A3" Click="button_divide_Click"/>
         <Button x:Name="button_result" Content="=" HorizontalAlignment="Left" Margin="455,310,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FF00C835" Foreground="White" BorderBrush="#FFA3A3A3" Click="button_result_Click"/>
-        <Button x:Name="button_clearentry" Content="CE" HorizontalAlignment="Left" Margin="384,134,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FFFF3D3D" Foreground="White" BorderBrush="#FFA3A3A3"/>
-        <Button x:Name="button_clear" Content="C" HorizontalAlignment="Left" Margin="420,134,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FFFF3D3D" Foreground="White" BorderBrush="#FFA3A3A3"/>
+        <Button x:Name="button_clearentry" Content="CE" HorizontalAlignment="Left" Margin="384,134,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FFFF3D3D" Foreground="White" BorderBrush="#FFA3A3A3" Click="button_clearentry_Click"/>
+        <Button x:Name="button_clear" Content="C" HorizontalAlignment="Left" Margin="420,134,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FFFF3D3D" Foreground="White" BorderBrush="#FFA3A3A3" Click="button_clear_Click"/>
         <Button x:Name="button_del" Content="&lt;--" HorizontalAlignment="Left" Margin="455,134,0,0" VerticalAlignment="Top" Width="30" Height="30" Background="#FF484848" Foreground="White" BorderBrush="#FFA3A3A3"/>
         <Rectangle HorizontalAlignment="Left" Height="75" Margin="311,40,0,0" Stroke="Black" VerticalAlignment="Top" Width="174" RadiusX="10" RadiusY="10">
             <Rectangle.Fill>
