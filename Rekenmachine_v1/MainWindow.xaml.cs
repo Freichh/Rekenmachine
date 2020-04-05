@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,14 +31,20 @@ namespace Rekenmachine_v1
         // Invoer opslag variabele
         string enteredValue = "";
 
+        string enteredEuroValue = "";
+
         // Opslag voor berekeningen
         double storedValue = 0;
 
         // Resultaat van laatste berekening
         double endResult = 0;
 
+        bool useEuros = false;
+
+        CultureInfo nlEuro = new CultureInfo("nl-NL");
+
         Operation operation = Operation.None;
- 
+        
         private void button_1_Click(object sender, RoutedEventArgs e) { ButtonInput("1"); }
         private void button_2_Click(object sender, RoutedEventArgs e) { ButtonInput("2"); }
         private void button_3_Click(object sender, RoutedEventArgs e) { ButtonInput("3"); }
@@ -84,16 +91,30 @@ namespace Rekenmachine_v1
 
         private void button_clear_Click(object sender, RoutedEventArgs e)
         {
-            screenLabel.Content = 0;
             enteredValue = "";
             storedValue = 0;
             endResult = 0;
+            if (useEuros)
+            {
+                screenLabel.Content = 0.ToString("C", nlEuro);
+            }
+            else
+            {
+                screenLabel.Content = 0;
+            }
         }
 
         private void button_clearentry_Click(object sender, RoutedEventArgs e)
         {
             enteredValue = "";
-            screenLabel.Content = 0;
+            if (useEuros)
+            {
+                screenLabel.Content = 0.ToString("C", nlEuro);
+            }
+            else
+            {
+                screenLabel.Content = 0;
+            }
         }
 
         private void button_percent_Click(object sender, RoutedEventArgs e)
@@ -103,7 +124,57 @@ namespace Rekenmachine_v1
 
         private void button_euro_Click(object sender, RoutedEventArgs e)
         {
+            // switch to toggle usage and display of euro currency
+            if (useEuros == false)
+            {
+                useEuros = true;
 
+                // laat € 0 zien als switch zonder invoeren
+                if (enteredValue == "" && storedValue == 0)
+                {
+                    screenLabel.Content = 0.ToString("C", nlEuro);
+                }
+                // Als er alleen een storedValue is, zoals bij endResult...
+                else if (enteredValue == "" && storedValue != 0)
+                {
+                    enteredEuroValue = (storedValue).ToString("C", nlEuro);
+                    Console.WriteLine("storedEuroValue " + enteredEuroValue);
+
+                    // laat euro's zien op display
+                    screenLabel.Content = enteredEuroValue;
+                }
+                // Als er een storedValue en enteredValue zijn...
+                else
+                {
+                    enteredEuroValue = double.Parse(enteredValue).ToString("C", nlEuro);
+                    Console.WriteLine("enteredEuroValue " + enteredEuroValue);
+                    // laat euro's zien op display
+                    screenLabel.Content = enteredEuroValue;
+                }
+            }
+            else
+            {
+                useEuros = false;
+
+                // Laat weer getallen zien op display
+                // wanneer geen invoer
+                if (enteredValue == "" && storedValue == 0)
+                {
+                    screenLabel.Content = 0;
+                }
+                // wanneer alleen storedValue
+                else if (enteredValue == "" && storedValue != 0)
+                {
+                    screenLabel.Content = storedValue;
+                }
+                // wanneer overige
+                else
+                {
+                    screenLabel.Content = enteredValue;
+                }
+            }
+
+            Console.WriteLine("Using euros = " + useEuros);
         }
 
         private void button_del_Click(object sender, RoutedEventArgs e)
@@ -115,7 +186,7 @@ namespace Rekenmachine_v1
                 Console.WriteLine("New enteredValue: " + enteredValue);
 
                 // laat zien op display
-                screenLabel.Content = null + enteredValue;
+                screenLabel.Content = enteredValue;
 
                 if (enteredValue.Length == 0)
                 {
@@ -130,26 +201,38 @@ namespace Rekenmachine_v1
         private void ButtonInput(string value)
         {
             enteredValue += value;
-            Console.WriteLine("enteredValue: " + enteredValue);
 
-            // laat zien op display
-            screenLabel.Content = null + enteredValue;
+            if (useEuros == true)
+            {
+                enteredEuroValue = double.Parse(enteredValue).ToString("C", nlEuro);
+                Console.WriteLine("enteredEuroValue " + enteredEuroValue);
+
+                // laat euro's zien op display
+                screenLabel.Content = enteredEuroValue;
+            }
+            else
+            {
+                // laat getallen zien op display
+                screenLabel.Content = enteredValue;
+                Console.WriteLine("enteredValue " + enteredValue);
+            }
+
         }
 
         private void ProcessInput()
         {
-            // maak 0 als vanaf 0 wordt berekend zonder 1e invoer
+            // maak 1e invoer 0 als vanaf 0 wordt berekend zonder 1e invoer
             if (enteredValue == "" && storedValue == 0)
             {
-                Console.WriteLine("No input, set 0:");
+                Console.WriteLine("No input given, set enteredValue to 0:");
                 enteredValue = "0";
             }
 
-            // Converteer invoer naar double en sla op als nog leeg is onder storedValue
+            // Converteer invoer naar double en sla op onder storedValue als nog leeg is
             if (storedValue == 0)
             {
                 storedValue += double.Parse(enteredValue);
-                Console.WriteLine("storedValue: " + storedValue);
+                Console.WriteLine("storedValue = " + storedValue);
 
                 // set operation?
             }
@@ -165,9 +248,9 @@ namespace Rekenmachine_v1
                 // do nothing
             }
 
-            // Leeg invoer
+            // Leeg invoer en wacht op nieuwe
             enteredValue = "";
-            Console.WriteLine("clear enteredValue: " + enteredValue);
+            Console.WriteLine("Clear process enteredValue: " + enteredValue);
         }
 
         private void CalculateResult()
@@ -202,14 +285,23 @@ namespace Rekenmachine_v1
                         break;
                 }
 
-                // Leeg invoer
+                // Leeg invoer en wacht op nieuwe
                 enteredValue = "";
+                Console.WriteLine("Clear result enteredValue: " + enteredValue);
 
                 // Sla op in geheugen voor verdere berekening
                 storedValue = endResult;
+                Console.WriteLine("Saved result as storedValue: " + storedValue);
 
                 // laat zien op display
-                screenLabel.Content = endResult;
+                if (useEuros)
+                {
+                    screenLabel.Content = endResult.ToString("C", nlEuro);
+                }
+                else
+                {
+                    screenLabel.Content = endResult;
+                }
             }
         }
 
