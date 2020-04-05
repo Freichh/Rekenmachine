@@ -119,7 +119,51 @@ namespace Rekenmachine_v1
 
         private void button_percent_Click(object sender, RoutedEventArgs e)
         {
-
+            // % als linker invoer
+            if (enteredValue.Length > 0 && storedValue == 0)
+            {
+                double percentageValue = double.Parse(enteredValue) / 100;
+                enteredValue = percentageValue.ToString();
+                Console.WriteLine("Percentage value = " + enteredValue);
+                screenLabel.Content = enteredValue;
+            }
+            // % als rechter invoer
+            else if (enteredValue.Length > 0 && storedValue > 0)
+            {
+                switch (operation)
+                {
+                    case Operation.Plus:
+                        double percentageCalc = (storedValue / 100) * double.Parse(enteredValue);
+                        Console.WriteLine(percentageCalc);
+                        enteredValue = percentageCalc.ToString();
+                        screenLabel.Content = enteredValue;
+                        break;
+                    case Operation.Min:
+                        endResult = storedValue - double.Parse(enteredValue);
+                        Console.WriteLine("endResult Min: " + endResult);
+                        break;
+                    case Operation.Multiply:
+                        endResult = storedValue * double.Parse(enteredValue);
+                        Console.WriteLine("endResult Multi: " + endResult);
+                        break;
+                    case Operation.Divide:
+                        endResult = storedValue / double.Parse(enteredValue);
+                        Console.WriteLine("endResult Divide: " + endResult);
+                        break;
+                    case Operation.Percent:
+                        endResult = storedValue * double.Parse(enteredValue);
+                        Console.WriteLine("endResult Percent: " + endResult);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                // do nothing
+                Console.WriteLine("Error");
+            }
+            
         }
 
         private void button_euro_Click(object sender, RoutedEventArgs e)
@@ -289,6 +333,9 @@ namespace Rekenmachine_v1
                 enteredValue = "";
                 Console.WriteLine("Clear result enteredValue: " + enteredValue);
 
+                // Operation default state
+                operation = Operation.None;
+
                 // Sla op in geheugen voor verdere berekening
                 storedValue = endResult;
                 Console.WriteLine("Saved result as storedValue: " + storedValue);
@@ -314,7 +361,6 @@ namespace Rekenmachine_v1
             Divide,
             Percent
         }
-
 
     }
 }
