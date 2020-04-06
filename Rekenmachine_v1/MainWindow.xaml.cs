@@ -90,14 +90,21 @@ namespace Rekenmachine_v1
 
         private void button_result_Click(object sender, RoutedEventArgs e) 
         {
-            // Alleen 1e invoer wordt resultaat
+            // Alleen 1e invoer, wordt resultaat
             if (enteredValueEmpty == false && storedValueEmpty == true)
             {
                 operation = Operation.None;
                 Console.WriteLine("Operation " + operation);
                 CalculateResult();
             }
-            // Meerdere invoer
+            // Alleen storedValue, wordt resultaat
+            else if (enteredValueEmpty == true && storedValueEmpty == false)
+            {
+                operation = Operation.None;
+                Console.WriteLine("Operation " + operation);
+                CalculateResult();
+            }
+            // Meerdere invoeren, worden resultaat
             else
             {
                 CalculateResult();
