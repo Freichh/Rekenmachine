@@ -59,6 +59,8 @@ namespace Rekenmachine_v1
         private void button_8_Click(object sender, RoutedEventArgs e) { ButtonInput("8"); }
         private void button_9_Click(object sender, RoutedEventArgs e) { ButtonInput("9"); }
         private void button_0_Click(object sender, RoutedEventArgs e) { ButtonInput("0"); }
+        private void button_comma_Click(object sender, RoutedEventArgs e) { ButtonInput(","); }
+        
 
         private void button_plus_Click(object sender, RoutedEventArgs e)
         {
@@ -293,6 +295,35 @@ namespace Rekenmachine_v1
             }
         }
 
+        private void button_plusormin_Click(object sender, RoutedEventArgs e) 
+        {
+            if (enteredValueEmpty == false)
+            {
+                double negativeValue = double.Parse(enteredValue) * -1;
+                Console.WriteLine(negativeValue);
+                enteredValue = negativeValue.ToString();
+                Console.WriteLine(enteredValue);
+                screenLabel.Content = enteredValue;
+            }
+            else if (storedValueEmpty == false)
+            {
+                double negativeValue = storedValue * -1;
+                Console.WriteLine(negativeValue);
+                storedValue = negativeValue;
+                Console.WriteLine(storedValue);
+                screenLabel.Content = storedValue;
+            }
+            else if (endResultEmpty == false)
+            {
+                double negativeValue = endResult * -1;
+                Console.WriteLine(negativeValue);
+                endResult = negativeValue;
+                Console.WriteLine(endResult);
+                screenLabel.Content = endResult;
+            }
+
+        }
+
 
         // METHODS
         private void ButtonInput(string value)
@@ -334,7 +365,7 @@ namespace Rekenmachine_v1
             if (enteredValueEmpty == false && storedValueEmpty == true) // && endResultEmpty == true
             {
                 storedValue += double.Parse(enteredValue);
-                Console.WriteLine("#2 - storedValue = enteredValue " + storedValue);
+                Console.WriteLine("#2 - storedValue = " + storedValue);
                 storedValueEmpty = false;
             }
             // Anders, bereken als er 2 getallen zijn en er een 'operatie' i.p.v. '=' wordt gekozen 
@@ -357,7 +388,7 @@ namespace Rekenmachine_v1
             // Leeg invoer en wacht op nieuwe
             enteredValue = "";
             enteredValueEmpty = true;
-            Console.WriteLine("Clearing (process), enteredValue = " + enteredValue);
+            Console.WriteLine("Clearing (process)enteredValue = " + enteredValue);
         }
 
         private void CalculateResult()
@@ -398,13 +429,13 @@ namespace Rekenmachine_v1
                 // Leeg invoer en wacht op nieuwe
                 enteredValue = "";
                 enteredValueEmpty = true;
-                Console.WriteLine("Clearing (calculate), enteredValue = " + enteredValue);
+                Console.WriteLine("Clearing (calculate)enteredValue = " + enteredValue);
 
                 // Leeg storedValue
                 storedValue = 0;
                 storedValueEmpty = true;
 
-                // Laatste resultaat wordt bewaard onder 'endResult'
+                // Laatste resultaat wordt bewaard onder 'endResult' en boolean switch
                 endResultEmpty = false;
 
                 // laat zien op display, euro's of getallen
@@ -428,6 +459,7 @@ namespace Rekenmachine_v1
             Divide,
             Percent
         }
+
 
     }
 }
