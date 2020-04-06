@@ -212,7 +212,7 @@ namespace Rekenmachine_v1
                 }
 
                 // Alleen een enteredValue...
-                else if (enteredValueEmpty == false && storedValueEmpty == true)
+                else if (enteredValueEmpty == false)
                 {
                     enteredEuroValue = double.Parse(enteredValue).ToString("C", nlEuro);
                     Console.WriteLine("enteredEuroValue " + enteredEuroValue);
@@ -220,7 +220,7 @@ namespace Rekenmachine_v1
                     screenLabel.Content = enteredEuroValue;
                 }
                 // Alleen een storedValue...
-                else if (enteredValueEmpty == true && storedValueEmpty == false)
+                else if (storedValueEmpty == false)
                 {
                     enteredEuroValue = (storedValue).ToString("C", nlEuro);
                     Console.WriteLine("storedEuroValue " + enteredEuroValue);
@@ -232,14 +232,6 @@ namespace Rekenmachine_v1
                 {
                     enteredEuroValue = (endResult).ToString("C", nlEuro);
                     Console.WriteLine("endResultEuroValue " + enteredEuroValue);
-                    // laat euro's zien op display
-                    screenLabel.Content = enteredEuroValue;
-                }
-                // Als er een storedValue en enteredValue zijn...
-                else
-                {
-                    enteredEuroValue = double.Parse(enteredValue).ToString("C", nlEuro);
-                    Console.WriteLine("enteredEuroValue " + enteredEuroValue);
                     // laat euro's zien op display
                     screenLabel.Content = enteredEuroValue;
                 }
