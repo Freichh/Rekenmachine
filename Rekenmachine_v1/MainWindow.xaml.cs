@@ -142,44 +142,43 @@ namespace Rekenmachine_v1
 
         private void button_percent_Click(object sender, RoutedEventArgs e)
         {
-            // % als linker invoer
-            if (enteredValue.Length > 0 && storedValue == 0)
+            // % als linker (1e) invoer
+            if (enteredValueEmpty == false && storedValueEmpty == true)
             {
                 double percentageValue = double.Parse(enteredValue) / 100;
                 enteredValue = percentageValue.ToString();
                 Console.WriteLine("Percentage value = " + enteredValue);
                 screenLabel.Content = enteredValue;
             }
-            // % als rechter invoer
-            else if (enteredValue.Length > 0 && storedValue > 0)
+            // % als rechter (2e) invoer
+            else if (enteredValueEmpty == false && storedValueEmpty == false)
             {
                 switch (operation)
                 {
                     case Operation.Plus:
-                        double percentageCalc = (storedValue / 100) * double.Parse(enteredValue);
-                        Console.WriteLine(percentageCalc);
-                        enteredValue = percentageCalc.ToString();
-                        screenLabel.Content = enteredValue;
+                        double plusPercentageCalc = (storedValue / 100) * double.Parse(enteredValue);
+                        Console.WriteLine("plusPercentageCalc = " + plusPercentageCalc);
+                        enteredValue = plusPercentageCalc.ToString();
                         break;
                     case Operation.Min:
-                        endResult = storedValue - double.Parse(enteredValue);
-                        Console.WriteLine("endResult Min: " + endResult);
+                        double minPercentageCalc = (storedValue / 100) * double.Parse(enteredValue);
+                        Console.WriteLine("minPercentageCalc = " + minPercentageCalc);
+                        enteredValue = minPercentageCalc.ToString();
                         break;
                     case Operation.Multiply:
-                        endResult = storedValue * double.Parse(enteredValue);
-                        Console.WriteLine("endResult Multi: " + endResult);
+                        double multiplyPercentageCalc = double.Parse(enteredValue) / 100;
+                        Console.WriteLine("multiplyPercentageCalc = " + multiplyPercentageCalc);
+                        enteredValue = multiplyPercentageCalc.ToString();
                         break;
                     case Operation.Divide:
-                        endResult = storedValue / double.Parse(enteredValue);
-                        Console.WriteLine("endResult Divide: " + endResult);
-                        break;
-                    case Operation.Percent:
-                        endResult = storedValue * double.Parse(enteredValue);
-                        Console.WriteLine("endResult Percent: " + endResult);
+                        double dividePercentageCalc = double.Parse(enteredValue) / 100;
+                        Console.WriteLine("dividePercentageCalc = " + dividePercentageCalc);
+                        enteredValue = dividePercentageCalc.ToString();
                         break;
                     default:
                         break;
                 }
+                screenLabel.Content = enteredValue;
             }
             else
             {
