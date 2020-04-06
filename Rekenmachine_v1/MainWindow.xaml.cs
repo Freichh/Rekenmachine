@@ -313,6 +313,37 @@ namespace Rekenmachine_v1
                 Console.WriteLine(endResult);
                 screenLabel.Content = endResult;
             }
+        }
+
+        /*
+        MC = Memory Clear sets the memory to 0
+        MR = Memory Recall uses the number in memory, acts as if you had keyed in that number yourself
+        MS = Memory Store puts the number on the display into the memory
+        M+ = Memory Add takes the number on the display, adds it to the memory, and puts the result into memory
+        */
+
+        private void button_mr_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void button_mPlus_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void button_mMin_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void button_ms_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void button_mc_Click(object sender, RoutedEventArgs e)
+        {
 
         }
 
@@ -451,7 +482,6 @@ namespace Rekenmachine_v1
             Divide,
             Percent
         }
-
 
     }
 }
