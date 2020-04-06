@@ -190,22 +190,39 @@ namespace Rekenmachine_v1
 
         private void button_euro_Click(object sender, RoutedEventArgs e)
         {
-            // switch to toggle usage and display of euro currency
+            // switch om alles weer te geven in euro's. Berekeningen blijven echter hetzelfde en gebruiken de oude waardes!
             if (useEuros == false)
             {
                 useEuros = true;
 
-                // laat € 0 zien als switch zonder invoeren
-                if (enteredValue == "" && storedValue == 0)
+                // laat € 0 zien als geen invoeren
+                if (allEmpty)
                 {
+                    Console.WriteLine("No input, set to 0");
                     screenLabel.Content = 0.ToString("C", nlEuro);
                 }
-                // Als er alleen een storedValue is, zoals bij endResult...
-                else if (enteredValue == "" && storedValue != 0)
+
+                // Alleen een enteredValue...
+                else if (enteredValueEmpty == false && storedValueEmpty == true)
+                {
+                    enteredEuroValue = double.Parse(enteredValue).ToString("C", nlEuro);
+                    Console.WriteLine("enteredEuroValue " + enteredEuroValue);
+                    // laat euro's zien op display
+                    screenLabel.Content = enteredEuroValue;
+                }
+                // Alleen een storedValue...
+                else if (enteredValueEmpty == true && storedValueEmpty == false)
                 {
                     enteredEuroValue = (storedValue).ToString("C", nlEuro);
                     Console.WriteLine("storedEuroValue " + enteredEuroValue);
-
+                    // laat euro's zien op display
+                    screenLabel.Content = enteredEuroValue;
+                }
+                // Alleen een endResult...
+                else if (endResultEmpty == false)
+                {
+                    enteredEuroValue = (endResult).ToString("C", nlEuro);
+                    Console.WriteLine("endResultEuroValue " + enteredEuroValue);
                     // laat euro's zien op display
                     screenLabel.Content = enteredEuroValue;
                 }
@@ -224,14 +241,19 @@ namespace Rekenmachine_v1
 
                 // Laat weer getallen zien op display
                 // wanneer geen invoer
-                if (enteredValue == "" && storedValue == 0)
+                if (allEmpty)
                 {
                     screenLabel.Content = 0;
                 }
                 // wanneer alleen storedValue
-                else if (enteredValue == "" && storedValue != 0)
+                else if (enteredValueEmpty == true && storedValueEmpty == false)
                 {
                     screenLabel.Content = storedValue;
+                }
+                // Alleen een endResult...
+                else if (endResultEmpty == false)
+                {
+                    screenLabel.Content = endResult;
                 }
                 // wanneer overige
                 else
@@ -272,6 +294,7 @@ namespace Rekenmachine_v1
             enteredValueEmpty = false;
             allEmpty = false;
 
+            // omzetten naar euro's als aangeswitched
             if (useEuros == true)
             {
                 enteredEuroValue = double.Parse(enteredValue).ToString("C", nlEuro);
@@ -377,7 +400,7 @@ namespace Rekenmachine_v1
                 // Laatste resultaat wordt bewaard onder 'endResult'
                 endResultEmpty = false;
 
-                // laat zien op display
+                // laat zien op display, euro's of getallen
                 if (useEuros)
                 {
                     screenLabel.Content = endResult.ToString("C", nlEuro);
