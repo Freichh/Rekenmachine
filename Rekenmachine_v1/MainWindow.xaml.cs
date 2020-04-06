@@ -30,16 +30,20 @@ namespace Rekenmachine_v1
 
         // Invoer opslag variabele
         string enteredValue = "";
+        bool enteredValueEmpty = true;
 
         string enteredEuroValue = "";
+        bool useEuros = false;
 
         // Opslag voor berekeningen
         double storedValue = 0;
+        bool storedValueEmpty = true;
 
         // Resultaat van laatste berekening
         double endResult = 0;
+        bool endResultEmpty = true;
 
-        bool useEuros = false;
+        bool allEmpty = true;
 
         CultureInfo nlEuro = new CultureInfo("nl-NL");
 
@@ -58,9 +62,9 @@ namespace Rekenmachine_v1
 
         private void button_plus_Click(object sender, RoutedEventArgs e)
         {
+            ProcessInput();
             operation = Operation.Plus;
             Console.WriteLine("Operation " + operation);
-            ProcessInput();
         }
 
         private void button_min_Click(object sender, RoutedEventArgs e)
@@ -85,15 +89,33 @@ namespace Rekenmachine_v1
         }
 
         private void button_result_Click(object sender, RoutedEventArgs e) 
-        { 
-            CalculateResult(); 
+        {
+            // Alleen 1e invoer wordt resultaat
+            if (enteredValueEmpty == false && storedValueEmpty == true)
+            {
+                operation = Operation.None;
+                Console.WriteLine("Operation " + operation);
+                CalculateResult();
+            }
+            // Meerdere invoer
+            else
+            {
+                CalculateResult();
+                // Operation default state
+                operation = Operation.None;
+                Console.WriteLine("Operation " + operation);
+            }
         }
 
         private void button_clear_Click(object sender, RoutedEventArgs e)
         {
             enteredValue = "";
+            enteredValueEmpty = true; 
             storedValue = 0;
+            storedValueEmpty = true;
             endResult = 0;
+            endResultEmpty = true;
+            allEmpty = true;
             if (useEuros)
             {
                 screenLabel.Content = 0.ToString("C", nlEuro);
@@ -107,6 +129,7 @@ namespace Rekenmachine_v1
         private void button_clearentry_Click(object sender, RoutedEventArgs e)
         {
             enteredValue = "";
+            enteredValueEmpty = true;
             if (useEuros)
             {
                 screenLabel.Content = 0.ToString("C", nlEuro);
@@ -223,6 +246,7 @@ namespace Rekenmachine_v1
 
         private void button_del_Click(object sender, RoutedEventArgs e)
         {
+            // Backspace t/m laatste getal
             if (enteredValue.Length > 0)
             {
                 Console.WriteLine("Backspace, old " + enteredValue);
@@ -232,6 +256,7 @@ namespace Rekenmachine_v1
                 // laat zien op display
                 screenLabel.Content = enteredValue;
 
+                // Maak invoer leeg en laat 0 zien bij backspace laatste getal
                 if (enteredValue.Length == 0)
                 {
                     screenLabel.Content = 0;
@@ -245,6 +270,8 @@ namespace Rekenmachine_v1
         private void ButtonInput(string value)
         {
             enteredValue += value;
+            enteredValueEmpty = false;
+            allEmpty = false;
 
             if (useEuros == true)
             {
@@ -265,65 +292,75 @@ namespace Rekenmachine_v1
 
         private void ProcessInput()
         {
-            // maak 1e invoer 0 als vanaf 0 wordt berekend zonder 1e invoer
-            if (enteredValue == "" && storedValue == 0)
+            // Als vanaf 0 wordt berekend zonder 1e invoer (enteredValue): maak storedValue 0 en wacht... 
+            if (allEmpty)
             {
-                Console.WriteLine("No input given, set enteredValue to 0:");
-                enteredValue = "0";
+                Console.WriteLine("#1 - No input given, set storedValue to 0: ");
+                storedValue = 0;
+                storedValueEmpty = false;
+                allEmpty = false;
             }
 
-            // Converteer invoer naar double en sla op onder storedValue als nog leeg is
-            if (storedValue == 0)
+            // Als er al een 1e invoer is: converteer invoer naar double, en sla op onder storedValue als die nog leeg is en wacht...
+            if (enteredValueEmpty == false && storedValueEmpty == true) // && endResultEmpty == true
             {
                 storedValue += double.Parse(enteredValue);
-                Console.WriteLine("storedValue = " + storedValue);
-
-                // set operation?
+                Console.WriteLine("#2 - storedValue = enteredValue " + storedValue);
+                storedValueEmpty = false;
             }
-
-            // bereken als er 2 getallen zijn en er een operatie i.p.v. '=' wordt gekozen 
-            else if (enteredValue.Length > 0)
+            // Anders, bereken als er 2 getallen zijn en er een 'operatie' i.p.v. '=' wordt gekozen 
+            else if (enteredValueEmpty == false && storedValueEmpty == false)
             {
-                Console.WriteLine("Calculate: " + enteredValue + " and " + storedValue);
+                Console.WriteLine("#3 - Calculate: " + enteredValue + " and " + storedValue);
                 CalculateResult();
             }
-            else
+
+            // Als er al een endResult is en direct vervolgoperatie: zet over in storedValue en wacht op invoer (enteredValue)
+            if (endResultEmpty == false && enteredValueEmpty == true)
             {
-                // do nothing
+                storedValue = endResult;
+                storedValueEmpty = false;
+                Console.WriteLine("#4 - endResult >> storedValue = " + storedValue);
+                endResult = 0;
+                endResultEmpty = true;
             }
 
             // Leeg invoer en wacht op nieuwe
             enteredValue = "";
-            Console.WriteLine("Clear process enteredValue: " + enteredValue);
+            enteredValueEmpty = true;
+            Console.WriteLine("Clearing (process), enteredValue = " + enteredValue);
         }
 
         private void CalculateResult()
         {
             // Bereken alleen wanneer er een enteredValue en storedValue zijn
-            if (enteredValue.Length > 0)
+            if (enteredValueEmpty == false)
             {
-                Console.WriteLine("Result operation " + operation);
                 switch (operation)
                 {
+                    case Operation.None:
+                        endResult = storedValue + double.Parse(enteredValue);
+                        Console.WriteLine("None endResult = " + endResult);
+                        break;
                     case Operation.Plus:
                         endResult = storedValue + double.Parse(enteredValue);
-                        Console.WriteLine("endResult Plus: " + endResult);
+                        Console.WriteLine("Plus endResult = " + endResult);
                         break;
                     case Operation.Min:
                         endResult = storedValue - double.Parse(enteredValue);
-                        Console.WriteLine("endResult Min: " + endResult);
+                        Console.WriteLine("Min endResult = " + endResult);
                         break;
                     case Operation.Multiply:
                         endResult = storedValue * double.Parse(enteredValue);
-                        Console.WriteLine("endResult Multi: " + endResult);
+                        Console.WriteLine("Multiply endResult = " + endResult);
                         break;
                     case Operation.Divide:
                         endResult = storedValue / double.Parse(enteredValue);
-                        Console.WriteLine("endResult Divide: " + endResult);
+                        Console.WriteLine("Divide endResult = " + endResult);
                         break;
                     case Operation.Percent:
                         endResult = storedValue * double.Parse(enteredValue);
-                        Console.WriteLine("endResult Percent: " + endResult);
+                        Console.WriteLine("Percent endResult = " + endResult);
                         break;
                     default:
                         break;
@@ -331,14 +368,15 @@ namespace Rekenmachine_v1
 
                 // Leeg invoer en wacht op nieuwe
                 enteredValue = "";
-                Console.WriteLine("Clear result enteredValue: " + enteredValue);
+                enteredValueEmpty = true;
+                Console.WriteLine("Clearing (calculate), enteredValue = " + enteredValue);
 
-                // Operation default state
-                operation = Operation.None;
+                // Leeg storedValue
+                storedValue = 0;
+                storedValueEmpty = true;
 
-                // Sla op in geheugen voor verdere berekening
-                storedValue = endResult;
-                Console.WriteLine("Saved result as storedValue: " + storedValue);
+                // Laatste resultaat wordt bewaard onder 'endResult'
+                endResultEmpty = false;
 
                 // laat zien op display
                 if (useEuros)
