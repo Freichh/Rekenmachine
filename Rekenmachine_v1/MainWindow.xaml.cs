@@ -43,7 +43,11 @@ namespace Rekenmachine_v1
         double endResult = 0;
         bool endResultEmpty = true;
 
+        // Begin or cleared state
         bool allEmpty = true;
+
+        // Used for the memory
+        double? memoryValue = null;
 
         CultureInfo nlEuro = new CultureInfo("nl-NL");
 
@@ -324,27 +328,84 @@ namespace Rekenmachine_v1
 
         private void button_mr_Click(object sender, RoutedEventArgs e)
         {
-
+            if (memoryValue != null)
+            {
+                enteredValue = memoryValue.ToString();
+                screenLabel.Content = enteredValue;
+                enteredValueEmpty = false;
+            }
         }
 
         private void button_mPlus_Click(object sender, RoutedEventArgs e)
         {
-
+            // Als enteredValue op display
+            if (storedValueEmpty == true && enteredValueEmpty == false)
+            {
+                memoryValue += double.Parse(enteredValue);
+                Console.WriteLine("memoryvalue = " + memoryValue);
+            }
+            // Als storedValue op display
+            if (storedValueEmpty == false && enteredValueEmpty == true)
+            {
+                memoryValue += storedValue;
+                Console.WriteLine("memoryvalue = " + memoryValue);
+            }
+            // Als endResult op display
+            if (endResultEmpty == false && enteredValueEmpty == true)
+            {
+                memoryValue += endResult;
+                Console.WriteLine("memoryvalue = " + memoryValue);
+            }
         }
 
         private void button_mMin_Click(object sender, RoutedEventArgs e)
         {
-
+            // Als enteredValue op display
+            if (storedValueEmpty == true && enteredValueEmpty == false)
+            {
+                memoryValue -= double.Parse(enteredValue);
+                Console.WriteLine("memoryvalue = " + memoryValue);
+            }
+            // Als storedValue op display
+            if (storedValueEmpty == false && enteredValueEmpty == true)
+            {
+                memoryValue -= storedValue;
+                Console.WriteLine("memoryvalue = " + memoryValue);
+            }
+            // Als endResult op display
+            if (endResultEmpty == false && enteredValueEmpty == true)
+            {
+                memoryValue -= endResult;
+                Console.WriteLine("memoryvalue = " + memoryValue);
+            }
         }
 
         private void button_ms_Click(object sender, RoutedEventArgs e)
         {
+            // Als enteredValue op display
+            if (storedValueEmpty == true && enteredValueEmpty == false)
+            {
+                memoryValue = double.Parse(enteredValue);
+                Console.WriteLine("memoryvalue = " + memoryValue);
+            }
+            // Als storedValue op display
+            if (storedValueEmpty == false && enteredValueEmpty == true)
+            {
+                memoryValue = storedValue;
+                Console.WriteLine("memoryvalue = " + memoryValue);
+            }
+            // Als endResult op display
+            if (endResultEmpty == false && enteredValueEmpty == true)
+            {
+                memoryValue = endResult;
+                Console.WriteLine("memoryvalue = " + memoryValue);
+            }
 
         }
 
         private void button_mc_Click(object sender, RoutedEventArgs e)
         {
-
+            memoryValue = null;
         }
 
 

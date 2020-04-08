@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Rectangle HorizontalAlignment="Left" Margin="295,23,0,0" Width="216" RadiusX="10" RadiusY="10" Height="344" VerticalAlignment="Top" Fill="#FF678AA6"/>
+        <Rectangle HorizontalAlignment="Left" Margin="294,21,0,0" Width="216" RadiusX="10" RadiusY="10" Height="344" VerticalAlignment="Top" Fill="#FF678AA6"/>
 
         <Rectangle HorizontalAlignment="Left" Margin="293,20,0,0" Width="211" RadiusX="10" RadiusY="10" Height="340" VerticalAlignment="Top">
             <Rectangle.Fill>
