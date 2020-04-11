@@ -52,7 +52,31 @@ namespace Rekenmachine_v1
         CultureInfo nlEuro = new CultureInfo("nl-NL");
 
         Operation operation = Operation.None;
-        
+
+        // Alle keyboard input
+         // ENTER FOCUS BUG
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.D0 || e.Key == Key.NumPad0) { button_0_Click(sender, e); }
+            if (e.Key == Key.D1 || e.Key == Key.NumPad1) { button_1_Click(sender, e); }
+            if (e.Key == Key.D2 || e.Key == Key.NumPad2) { button_2_Click(sender, e); }
+            if (e.Key == Key.D3 || e.Key == Key.NumPad3) { button_3_Click(sender, e); }
+            if (e.Key == Key.D4 || e.Key == Key.NumPad4) { button_4_Click(sender, e); }
+            if (e.Key == Key.D5 || e.Key == Key.NumPad5) { button_5_Click(sender, e); }
+            if (e.Key == Key.D6 || e.Key == Key.NumPad6) { button_6_Click(sender, e); }
+            if (e.Key == Key.D7 || e.Key == Key.NumPad7) { button_7_Click(sender, e); }
+            if (e.Key == Key.D8 || e.Key == Key.NumPad8) { button_8_Click(sender, e); }
+            if (e.Key == Key.D9 || e.Key == Key.NumPad9) { button_9_Click(sender, e); }
+            if (e.Key == Key.Add || e.Key == Key.OemPlus) { button_plus_Click(sender, e); }
+            if (e.Key == Key.Subtract || e.Key == Key.OemMinus) { button_min_Click(sender, e); }
+            if (e.Key == Key.Multiply) { button_multiply_Click(sender, e); }
+            if (e.Key == Key.Divide) { button_divide_Click(sender, e); }
+            if (e.Key == Key.Enter) { button_result_Click(sender, e); }
+            if (e.Key == Key.Back) { button_del_Click(sender, e); }
+            if (e.Key == Key.OemComma) { button_comma_Click(sender, e); }
+        }
+
+        // Alle button input
         private void button_1_Click(object sender, RoutedEventArgs e) { ButtonInput("1"); }
         private void button_2_Click(object sender, RoutedEventArgs e) { ButtonInput("2"); }
         private void button_3_Click(object sender, RoutedEventArgs e) { ButtonInput("3"); }
@@ -65,7 +89,6 @@ namespace Rekenmachine_v1
         private void button_0_Click(object sender, RoutedEventArgs e) { ButtonInput("0"); }
         private void button_comma_Click(object sender, RoutedEventArgs e) { ButtonInput(","); }
         
-
         private void button_plus_Click(object sender, RoutedEventArgs e)
         {
             ProcessInput();
@@ -543,6 +566,7 @@ namespace Rekenmachine_v1
             Divide,
             Percent
         }
+
 
     }
 }
