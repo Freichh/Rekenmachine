@@ -54,7 +54,6 @@ namespace Rekenmachine_v1
         Operation operation = Operation.None;
 
         // Alle keyboard input
-         // ENTER FOCUS BUG
         private void Window_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.D0 || e.Key == Key.NumPad0) { button_0_Click(sender, e); }
@@ -123,14 +122,14 @@ namespace Rekenmachine_v1
             if (enteredValueEmpty == false && storedValueEmpty == true)
             {
                 operation = Operation.None;
-                Console.WriteLine("Operation " + operation);
+                Console.WriteLine("Only enteredValue");
                 CalculateResult();
             }
             // Alleen storedValue, wordt resultaat
             else if (enteredValueEmpty == true && storedValueEmpty == false)
             {
                 operation = Operation.None;
-                Console.WriteLine("Operation " + operation);
+                Console.WriteLine("Only storedValue");
                 CalculateResult();
             }
             // Meerdere invoeren, worden resultaat
@@ -500,7 +499,6 @@ namespace Rekenmachine_v1
 
         private void CalculateResult()
         {
-            // Bereken alleen wanneer er een enteredValue en storedValue zijn
             if (enteredValueEmpty == false)
             {
                 switch (operation)
