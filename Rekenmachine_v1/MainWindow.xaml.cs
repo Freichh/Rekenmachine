@@ -118,8 +118,17 @@ namespace Rekenmachine_v1
 
         private void button_result_Click(object sender, RoutedEventArgs e) 
         {
+            // Geen invoer, 0 wordt enteredValue
+            if (allEmpty)
+            {
+                operation = Operation.None;
+                Console.WriteLine("No input");
+                enteredValue = "0";
+                enteredValueEmpty = false;
+                CalculateResult();
+            }
             // Alleen 1e invoer, wordt resultaat
-            if (enteredValueEmpty == false && storedValueEmpty == true)
+            else if (enteredValueEmpty == false && storedValueEmpty == true)
             {
                 operation = Operation.None;
                 Console.WriteLine("Only enteredValue");
@@ -129,8 +138,13 @@ namespace Rekenmachine_v1
             else if (enteredValueEmpty == true && storedValueEmpty == false)
             {
                 operation = Operation.None;
+                enteredValue = "0";
                 Console.WriteLine("Only storedValue");
                 CalculateResult();
+            }
+            else if (endResultEmpty == false)
+            {
+                Console.WriteLine("Only endResult");
             }
             // Meerdere invoeren, worden resultaat
             else
@@ -499,59 +513,55 @@ namespace Rekenmachine_v1
 
         private void CalculateResult()
         {
-            if (enteredValueEmpty == false)
+            switch (operation)
             {
-                switch (operation)
-                {
-                    case Operation.None:
-                        endResult = storedValue + double.Parse(enteredValue);
-                        Console.WriteLine("None endResult = " + endResult);
-                        break;
-                    case Operation.Plus:
-                        endResult = storedValue + double.Parse(enteredValue);
-                        Console.WriteLine("Plus endResult = " + endResult);
-                        break;
-                    case Operation.Min:
-                        endResult = storedValue - double.Parse(enteredValue);
-                        Console.WriteLine("Min endResult = " + endResult);
-                        break;
-                    case Operation.Multiply:
-                        endResult = storedValue * double.Parse(enteredValue);
-                        Console.WriteLine("Multiply endResult = " + endResult);
-                        break;
-                    case Operation.Divide:
-                        endResult = storedValue / double.Parse(enteredValue);
-                        Console.WriteLine("Divide endResult = " + endResult);
-                        break;
-                    case Operation.Percent:
-                        endResult = storedValue * double.Parse(enteredValue);
-                        Console.WriteLine("Percent endResult = " + endResult);
-                        break;
-                    default:
-                        break;
-                }
+                case Operation.None:
+                    endResult = storedValue + double.Parse(enteredValue);
+                    Console.WriteLine("None endResult = " + endResult);
+                    break;
+                case Operation.Plus:
+                    endResult = storedValue + double.Parse(enteredValue);
+                    Console.WriteLine("Plus endResult = " + endResult);
+                    break;
+                case Operation.Min:
+                    endResult = storedValue - double.Parse(enteredValue);
+                    Console.WriteLine("Min endResult = " + endResult);
+                    break;
+                case Operation.Multiply:
+                    endResult = storedValue * double.Parse(enteredValue);
+                    Console.WriteLine("Multiply endResult = " + endResult);
+                    break;
+                case Operation.Divide:
+                    endResult = storedValue / double.Parse(enteredValue);
+                    Console.WriteLine("Divide endResult = " + endResult);
+                    break;
+                case Operation.Percent:
+                    endResult = storedValue * double.Parse(enteredValue);
+                    Console.WriteLine("Percent endResult = " + endResult);
+                    break;
+                default:
+                    break;
+            }
 
-                // Leeg invoer en wacht op nieuwe
-                enteredValue = "";
-                enteredValueEmpty = true;
-                Console.WriteLine("Clearing (calculate)enteredValue = " + enteredValue);
+            // Leeg invoer en wacht op nieuwe
+            enteredValue = "";
+            enteredValueEmpty = true;
 
-                // Leeg storedValue
-                storedValue = 0;
-                storedValueEmpty = true;
+            // Leeg storedValue
+            storedValue = 0;
+            storedValueEmpty = true;
 
-                // Laatste resultaat wordt bewaard onder 'endResult' en boolean switch
-                endResultEmpty = false;
+            // Laatste resultaat wordt bewaard onder 'endResult' en boolean switch
+            endResultEmpty = false;
 
-                // laat zien op display, euro's of getallen
-                if (useEuros)
-                {
-                    screenLabel.Content = endResult.ToString("C", nlEuro);
-                }
-                else
-                {
-                    screenLabel.Content = endResult;
-                }
+            // laat zien op display, euro's of getallen
+            if (useEuros)
+            {
+                screenLabel.Content = endResult.ToString("C", nlEuro);
+            }
+            else
+            {
+                screenLabel.Content = endResult;
             }
         }
 
