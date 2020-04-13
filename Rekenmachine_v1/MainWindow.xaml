@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Rekenmachine_v1"
         mc:Ignorable="d"
         Title="Rekenmachine" Height="450" Width="350"
-        KeyDown="Window_KeyDown" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" SizeToContent="WidthAndHeight">
+        KeyDown="Window_KeyDown" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Topmost="True" WindowStyle="ToolWindow">
     <Grid>
         <Rectangle HorizontalAlignment="Left" Margin="64,41,0,0" Width="216" RadiusX="10" RadiusY="10" Height="344" VerticalAlignment="Top" Fill="#FF678AA6"/>
 
